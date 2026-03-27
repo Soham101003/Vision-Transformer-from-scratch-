@@ -11,6 +11,14 @@ Macro Recall: 0.9678
 Macro F1-score: 0.9677
 
 Macro-averaged metrics are reported to provide a balanced evaluation across all digit classes.
+**🧠 Architecture**
+The full ViT pipeline is implemented from the ground up:
+
+Patch Embedding — splits input images into fixed-size patches and linearly projects them into an embedding space
+Positional Encoding — learnable 1D positional embeddings added to patch tokens
+[CLS] Token — prepended classification token whose final state is used for prediction
+Transformer Encoder Blocks — multi-head self-attention + MLP with LayerNorm and residual connections
+Classification Head — MLP head on top of the [CLS] token output
 
 🧠 Key Highlights
 
