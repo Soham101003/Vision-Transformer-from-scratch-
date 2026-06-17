@@ -528,10 +528,10 @@ Model performance is evaluated on the MNIST test set.
 
 Metrics:
 
-* Accuracy
-* Classification performance
-* Generalization capability
-
+*Accuracy:        0.9680
+*Macro Precision: 0.9678
+*Macro Recall:    0.9678
+*Macro F1-score:  0.9677
 ---
 
 # 🔬 Key Learnings
