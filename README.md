@@ -522,17 +522,20 @@ Learning Rate:
 
 ---
 
-# 📈 Evaluation
+# 📈 Evaluation Results
 
-Model performance is evaluated on the MNIST test set.
+<div align="center">
 
-Metrics:
+| Metric | Value |
+|---------|---------|
+| 🎯 Accuracy | **96.80%** |
+| 🔍 Precision | **96.78%** |
+| 📡 Recall | **96.78%** |
+| ⚖️ F1-Score | **96.77%** |
 
-*Accuracy:        0.9680
-*Macro Precision: 0.9678
-*Macro Recall:    0.9678
-*Macro F1-score:  0.9677
----
+</div>
+
+The Vision Transformer achieved an overall test accuracy of **96.80%**, demonstrating its ability to capture meaningful visual representations through self-attention mechanisms. The closely aligned Precision, Recall, and F1-score indicate balanced performance across all digit classes without significant class-wise bias.
 
 # 🔬 Key Learnings
 
