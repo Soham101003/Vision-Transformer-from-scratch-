@@ -120,6 +120,321 @@ Classification Head
       ▼
 Predicted Class
 ```
+# 🧠 Understanding the Vision Transformer Architecture
+
+Unlike Convolutional Neural Networks (CNNs), which process local image regions using convolutional kernels, Vision Transformers treat an image as a sequence of visual tokens and learn global relationships using self-attention.
+
+The architecture can be divided into five major components:
+
+---
+
+## 1️⃣ Patch Extraction
+
+The first challenge is converting an image into a format suitable for Transformers.
+
+Given an image of size:
+
+```text
+32 × 32 × 1
+```
+
+and a patch size of:
+
+```text
+16 × 16
+```
+
+the image is divided into non-overlapping patches.
+
+```text
+┌─────┬─────┐
+│ P1  │ P2  │
+├─────┼─────┤
+│ P3  │ P4  │
+└─────┴─────┘
+```
+
+Each patch becomes an independent visual token.
+
+### Why is this necessary?
+
+Transformers are designed to process sequences.
+
+By splitting an image into patches, the image becomes analogous to a sentence:
+
+```text
+Image  →  Sequence of Patches
+
+Sentence → Sequence of Words
+```
+
+This allows the Transformer architecture to operate on images.
+
+---
+
+## 2️⃣ Patch Embedding Layer
+
+Each image patch is flattened into a vector.
+
+Example:
+
+```text
+16 × 16 Patch
+      ↓
+256 Values
+```
+
+These values are then projected into a higher-dimensional feature space using a learnable linear layer.
+
+```text
+Flattened Patch
+      ↓
+Linear Projection
+      ↓
+Embedding Vector
+```
+
+### Purpose
+
+The embedding layer converts raw pixel information into a dense representation that the Transformer can learn from.
+
+Without embeddings, the model would only see isolated pixel values rather than meaningful visual features.
+
+---
+
+## 3️⃣ CLS Token
+
+A learnable classification token is added to the beginning of the patch sequence.
+
+```text
+[CLS] P1 P2 P3 P4
+```
+
+The CLS token acts as a global information collector.
+
+During self-attention:
+
+* It interacts with all patches
+* Receives information from all image regions
+* Learns a compact representation of the entire image
+
+After the final Transformer layer:
+
+```text
+CLS Token
+     ↓
+MLP Head
+     ↓
+Prediction
+```
+
+### Why not use all patch embeddings?
+
+Using a single CLS token creates a fixed-size representation regardless of image size.
+
+This simplifies classification.
+
+---
+
+## 4️⃣ Positional Embeddings
+
+Transformers do not inherently understand spatial structure.
+
+For example:
+
+```text
+Patch A
+Patch B
+```
+
+and
+
+```text
+Patch B
+Patch A
+```
+
+appear identical to the model.
+
+To solve this problem, learnable positional embeddings are added.
+
+```text
+Patch Embedding
++
+Position Embedding
+=
+Input Token
+```
+
+### Why is this important?
+
+Position embeddings allow the model to understand:
+
+* Left vs Right
+* Top vs Bottom
+* Spatial arrangements
+* Object structure
+
+Without positional information, the image would effectively become a shuffled collection of patches.
+
+---
+
+## 5️⃣ Multi-Head Self Attention
+
+This is the core innovation behind Vision Transformers.
+
+Instead of using convolutional kernels, the model learns which patches should influence one another.
+
+For every token:
+
+```text
+Input
+ ├── Query
+ ├── Key
+ └── Value
+```
+
+Attention scores are computed using:
+
+```text
+Attention(Q,K,V)
+=
+Softmax(QKᵀ / √d)
+V
+```
+
+### Intuition
+
+Suppose the image contains the digit:
+
+```text
+8
+```
+
+A patch containing the top loop may need information from a patch containing the bottom loop.
+
+Self-attention allows these distant patches to communicate directly.
+
+CNNs require many convolution layers to achieve the same global receptive field.
+
+---
+
+## 6️⃣ Multi-Head Attention
+
+Instead of learning one attention pattern, multiple attention heads operate simultaneously.
+
+```text
+Head 1 → Shape Features
+
+Head 2 → Edges
+
+Head 3 → Texture
+
+Head 4 → Structural Patterns
+```
+
+Outputs from all heads are concatenated and projected.
+
+### Benefit
+
+Different heads learn different visual relationships.
+
+This creates richer image representations.
+
+---
+
+## 7️⃣ Transformer Encoder Block
+
+The encoder block is the fundamental building block of the Vision Transformer.
+
+Each block contains:
+
+```text
+LayerNorm
+      ↓
+Multi-Head Attention
+      ↓
+Residual Connection
+      ↓
+LayerNorm
+      ↓
+Feed Forward Network
+      ↓
+Residual Connection
+```
+
+### Residual Connections
+
+Residual connections help:
+
+* Prevent vanishing gradients
+* Improve optimization
+* Enable deeper networks
+
+### Layer Normalization
+
+Normalization stabilizes training and improves convergence.
+
+---
+
+## 8️⃣ Feed Forward Network (MLP)
+
+After attention, every token is independently processed through a Multi-Layer Perceptron.
+
+```text
+Linear
+   ↓
+GELU
+   ↓
+Linear
+```
+
+The MLP allows the network to learn nonlinear transformations beyond attention.
+
+---
+
+## 9️⃣ Classification Head
+
+After all Transformer layers:
+
+```text
+CLS Token
+     ↓
+Linear Layer
+     ↓
+Softmax
+     ↓
+Digit Prediction
+```
+
+The output probabilities correspond to the ten MNIST classes:
+
+```text
+0,1,2,3,4,5,6,7,8,9
+```
+
+The class with the highest probability becomes the final prediction.
+
+---
+
+# 📊 Why Vision Transformers Matter
+
+Vision Transformers introduced a paradigm shift in computer vision by demonstrating that:
+
+* Convolutions are not strictly necessary for image recognition.
+* Self-attention can model long-range visual dependencies.
+* Transformers can outperform CNNs when trained on sufficient data.
+
+This architecture inspired numerous follow-up models including:
+
+* DeiT
+* Swin Transformer
+* BEiT
+* ViT-H
+* DINOv2
+* Segment Anything Model (SAM)
+
+making Vision Transformers one of the most influential developments in modern computer vision.
 
 ---
 
