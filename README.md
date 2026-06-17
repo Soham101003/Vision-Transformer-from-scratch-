@@ -27,7 +27,7 @@ The implementation closely follows the seminal research paper:
 
 **"An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale"**
 
-and recreates all major components including:
+and recreates all major components, including:
 
 * Patch Embeddings
 * Positional Encoding
@@ -39,6 +39,7 @@ and recreates all major components including:
 The model is trained and evaluated on the MNIST handwritten digit dataset.
 
 ---
+
 
 # 📖 Research Paper
 
@@ -62,7 +63,15 @@ Authors:
 * Neil Houlsby
 
 Google Research
+# 🖼️ Vision Transformer (ViT) From Scratch in PyTorch
 
+<div align="center">
+
+<img src="assets/vit_architecture.png" width="900"/>
+
+**Figure 1:** Original Vision Transformer (ViT) architecture proposed by Dosovitskiy et al. (2020)
+
+</div>
 ---
 
 # 🎯 Project Objective
