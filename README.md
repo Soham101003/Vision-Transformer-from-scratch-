@@ -38,6 +38,8 @@ and recreates all major components, including:
 
 The model is trained and evaluated on the MNIST handwritten digit dataset.
 
+
+Link to the google colab notebook: https://colab.research.google.com/drive/1e62aw1I72fIIWo2agy_ewP5zEwYUP7HG?usp=sharing
 ---
 
 
